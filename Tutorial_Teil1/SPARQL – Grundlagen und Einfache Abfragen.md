@@ -86,7 +86,7 @@ Ok. Es geht aber noch besser. Denn nun wollen Sie wissen:
 
   * „Gib mir alle Gemälde von Leonardo Da Vinci mit ihren Bezeichnungen, die in Florenz erstellt wurden."
 
-```
+```sparql
 SELECT ?item ?itemLabel 
 WHERE
  {
@@ -102,7 +102,7 @@ Hinweis: Im WDQS gibt es eine Auto-Completion-Funktion, die mit `Ctrl+Space` akt
 
 Das geht auch kürzer:
 
-```
+```sparql
 SELECT ?item ?itemLabel
 WHERE
  {
@@ -148,7 +148,7 @@ Nun wissen Sie genug, um zu üben...
 
 
 #### Lösungen
-```
+```sparql
 # Lösung: Aufgabe 1
 SELECT ?item ?itemLabel 
 WHERE 
