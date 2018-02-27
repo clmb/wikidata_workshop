@@ -1,13 +1,13 @@
 
 # SPARQL – Grundlagen und Einfache Abfragen 
 
-  * Fokus:
-    * Informationen die auf Wikidata direkt verfügbar sind 
+Fokus:
+  * Informationen, die auf Wikidata direkt verfügbar sind 
 
-  * Zielsetzung:
-    * Verstehen des Aufbau der UI des WDQS 
-    * Umsetzung einfacher SPARQL-Abfragen 
-    * Anwendung der unterschiedlichen Visualisierungen im WDQS
+Zielsetzung:
+  * Verstehen des Aufbaus der Benutzeroberfläche des Wikidata Query Service (WDQS) 
+  * Eigenständiges Umsetzen einfacher SPARQL-Abfragen 
+  * Anwendung der unterschiedlichen Visualisierungen im WDQS
 
 
 ## Einfache Abfragen
