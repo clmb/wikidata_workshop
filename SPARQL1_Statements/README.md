@@ -1,5 +1,5 @@
 
-# SPARQL – Grundlagen und Einfache Abfragen 
+# Einführung in Aussagen 
 
 Fokus:
   * Informationen, die auf Wikidata direkt verfügbar sind 
