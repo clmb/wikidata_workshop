@@ -32,7 +32,7 @@ Wie können wir nun unser Wissen nutzen?
 
 Lassen Sie uns noch einmal die Wikidata-Seite zu [Leonardo da Vinci](https://www.wikidata.org/wiki/Q762) anschauen:
 
-Wir wissen bereits, dass *Leonardo da Vinci* (`Q762`) bestimmte *Werke* (`P800`) erstellt, unter anderem *Mona Lisa* (Q12418). Nun wollen wir aber erfahren, welche Werke von Leonardo da Vinci neben der Mona Lisa erstellt wurden. Lassen Sie uns diese Suchanfrage in natürlicher Sprache auszudrücken: 
+Wir wissen bereits, dass *Leonardo da Vinci* (`Q762`) bestimmte *Werke* (`P800`) erstellt hat, unter anderem *Mona Lisa* (Q12418). Nun wollen wir aber erfahren, welche Werke von Leonardo da Vinci neben der Mona Lisa erstellt wurden. Lassen Sie uns diese Suchanfrage in natürlicher Sprache ausdrücken: 
 
   * „Gib mir alle Werke von Leonardo Da Vinci.“ 
 
@@ -51,12 +51,12 @@ Lassen Sie uns die Query kurz zerlegen:
 
 Ausdruck | Beschreibung
 -------- | -------- 
-`SELECT` | SELECT ist ein Ausdrucksmittel. Was ausgewählt und angezeigt wollen soll, wird später beschrieben. 
-`?item`  | ?item ist eine Variable. Eine Varible kann an dem vorangestellten Fragezeichen erkannt werden. Tip: Wähle selbsterklärende Variablen. Diese Variable beschreibt, welchen Inhalt die Ergebnismenge umfasst. 
-`WHERE`  | Die WHERE-Klausel definiert, wonach genau gesucht werden soll und was letztlich in den Variablen steht. Eine WHERE-Klausel beginnt mit einer öffnenden geschweiften Klammer { und endet mit einer schließenden geschweiften Klammer }.
+`SELECT` | `SELECT` ist ein Ausdrucksmittel. Was ausgewählt und angezeigt wollen soll, wird später beschrieben. 
+`?item`  | `?item` ist eine Variable. Eine Variable kann an dem vorangestellten Fragezeichen erkannt werden. Tip: Wähle selbsterklärende Variablen. Diese Variable beschreibt, welchen Inhalt die Ergebnismenge umfasst. 
+`WHERE`  | Die `WHERE`-Klausel definiert, wonach genau gesucht werden soll und was letztlich in den Variablen steht. Eine WHERE-Klausel beginnt mit einer öffnenden geschweiften Klammer `{` und endet mit einer schließenden geschweiften Klammer `}`.
 `wd:Q762`| Hier beginnt die eigentliche Aussage, mit dem Subjekt. Einfach über das Element hovern, dann sehen sie die Bezeichnung. Das Präfix `wd:` kürzt sie URI http://www.wikidata.org/entity/ ab. 
 `wdt:P800` | Dies ist das Prädikat. Das Präfix `wdt:` repräsentiert die URI http://www.wikidata.org/prop/direct/. (wdt = wikidatatruthy)
-`?item`  | Das ist das Objekt bzw. die Objekte, die wir suchen. In diesem Fall alle Werke, die 
+`?item`  | Das ist das Objekt bzw. die Objekte, die wir suchen.
 
 Glückwunsch, dass war nun ihre erste Abfrage. Wenn wir uns das Ergebnis unserer Abfrage anschauen (eine Liste mit Q-Nummern), ist es nicht sehr aussagekräftig, daher sollten wir auch die Bezeichnungen der Items dazu nehmen. Lassen Sie uns also unsere Aussage erweitern um:
 
@@ -75,9 +75,10 @@ Was ist dazugekommen?
 
 Ausdruck | Beschreibung
 -------- | -------- 
-?itemLabel | Wir können Bezeichnungen schneller erfassen als Zahlen. Eine Bezeichnung (Label) ist der Name eines Datenobjekts (Q...) in einer Sprache, z.B. Englisch. 
-SERVICE | Ein Service erweitert die Standardmöglichkeiten von SPARQL im WDQS und macht es einfacher, bestimmte Abfragen zu stellen. Diese Services sind API-spezifisch und können nicht in anderen Endpoints verwendet werden.
-SERVICE wikibase:label | Dieser Service ist sehr hilfreich, wenn Sie Bezeichnungen abrufen möchten. "AUTO_LANGUAGE" bedeudet, dass die Bezeichnung des Datenobjekts in der Sprache der Benutzeroberfläche (in unserem Fall deutsch) angezeigt wird. Falls keine Bezeichnung in deutscher Sprache existiert, wird auf die englische Bezeichnung zurückgegriffen (daher "en").
+=======
+`?itemLabel` | Wir können Bezeichnungen schneller erfassen als Zahlen. Eine Bezeichnung (Label) ist der Name eines Datenobjekts (`Q...`) in einer Sprache, z.B. Englisch. 
+`SERVICE` | Ein Service erweitert die Standardmöglichkeiten von SPARQL im WDQS und macht es einfacher, bestimmte Abfragen zu stellen. Diese Services sind API-spezifisch und können nicht in anderen Endpoints verwendet werden.
+`SERVICE wikibase:label` | Dieser Service ist sehr hilfreich, wenn Sie Bezeichnungen abrufen möchten. "AUTO_LANGUAGE" bedeudet, dass die Bezeichnung des Datenobjekts in der Sprache der Benutzeroberfläche (in unserem Fall deutsch) angezeigt wird. Falls keine Bezeichnung in deutscher Sprache existiert, wird auf die englische Bezeichnung zurückgegriffen (daher "en").
 
 **>>> FOLIE: Andere Services (Foliennummer: XX) <<<**
 
@@ -98,11 +99,14 @@ WHERE
 ```
 Das geht auch syntaktisch kürzer. Sie können die erste und zweite Aussage zusammenziehen, da sich beide auf das gleiche Subjekt beziehen und durch ein Semikolon trennen (Kommatrennung existiert, wenn zwei oder mehr Aussagen das gleiche Objekt suchen).
 
+Hinweis: Im WDQS gibt es eine Auto-Completion-Funktion, die mit `Ctrl+Space` aktiviert wird. 
+
 ```sparql
 SELECT ?item ?itemLabel
 WHERE
  {
-  ?item wdt:P31 wd:Q3305213; wdt:P1071 wd:Q2044.
+  ?item wdt:P31 wd:Q3305213; 
+	      wdt:P1071 wd:Q2044.
   wd:Q762 wdt:P800 ?item.
 
   SERVICE wikibase:label{ bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -128,8 +132,8 @@ Nun sind wir bereits mitten in der Datenmodellierung, denn diese Information hil
 Die Beziehung zwischen Instanzen mit einem gemeinsamen Merkmal und einer Klasse, die durch dieses Merkmal gekennzeichnet ist, wird mit der Eigenschaft *ist ein(e)* (`P31`) hergestellt. 
 
 Zum Beispiel, *Mona Lisa* (`Q12418`) und *Der Schrei* (`Q18891156`) sind beides Instanzen von *Gemälde* (`Q3305213`). Daher finden wir auf Wikidata folgende Aussagen:
-  * Mona Lisa (Q12418) ist ein(e) (P31) Gemälde (Q3305213);
-  * Der Schrei (Q18891156) ist ein(e) (P31) Gemälde (Q3305213).
+  * Mona Lisa (`Q12418`) ist ein(e) (`P31`) Gemälde (`Q3305213`);
+  * Der Schrei (`Q18891156`) ist ein(e) (`P31`) Gemälde (`Q3305213`).
 
 Nun wissen Sie genug, damit Sie selbst üben können...
 
@@ -140,13 +144,14 @@ Diese Aufgaben sollten möglichst selbstständig gelöst werden.
 ### Aufgaben
 **>>> FOLIE: "Anwendung Teil 1" (Foliennummer: ) <<<**
 
-* Aufgabe 1: „Geben Sie mir eine Liste von allen Schüler*innen und deren deutsche oder englische Bezeichnungen von Leonardo Da Vinci”
-* Aufgabe 2: „Geben Sie mir eine Liste von allen Gemälden und deren deutsche oder englische Bezeichnungen, welche zur Gemäldesammlung des Louvre gehören.”
-* Aufgabe 3: „Geben Sie mir eine Liste von allen Gemälden und deren deutsche oder englische Bezeichnungen, zu deren Schlüsselereignissen ein Kunstraub gehört.”
-* Aufgabe 4a (fortgeschritten): „Geben Sie mir eine Liste von allen Gemälden und deren deutsche oder englische Bezeichnungen, die inspiriert sind von einem Gemälde aus dem 16. Jahrhundert. Zusätzlich soll die deutsche oder englische Bezeichnung des ursprünglichen Gemäldes und das Jahr, wann dieses entstanden ist angezeigt werden. Die Liste soll nach der Jahreszahl sortiert werden”
+* Aufgabe 1: „Geben Sie mir eine Liste von allen Schüler*innen (und deren deutsche oder englische Bezeichnungen) von Leonardo Da Vinci”
+* Aufgabe 2: „Geben Sie mir eine Liste von allen Gemälden (und deren deutsche oder englische Bezeichnungen), welche zur Gemäldesammlung des Louvre gehören.”
+* Aufgabe 3: „Geben Sie mir eine Liste von allen Gemälden (und deren deutsche oder englische Bezeichnungen), zu deren Schlüsselereignissen ein Kunstraub gehört.”
+* Aufgabe 4a (fortgeschritten): „Geben Sie mir eine Liste von allen Gemälden (und deren deutsche oder englische Bezeichnungen), die inspiriert sind von einem Gemälde aus dem 16. Jahrhundert. Zusätzlich sollen die deutsche oder englische Bezeichnung des ursprünglichen Gemäldes und das Jahr angezeigt werden, in dem dieses entstanden ist. Die Liste soll nach der Jahreszahl sortiert werden”
 * Aufgabe 4b (fortgeschritten): „Geben Sie mir eine Liste von allen Kunstmaler*innen und deren deutsche oder englische Bezeichnungen, deren Wirkungsort im Umkreis von 100 km um Rom  war.”
 
 ### Lösungen
+
 ```sparql
 # Lösung: Aufgabe 1
 SELECT ?item ?itemLabel 
@@ -221,7 +226,7 @@ WHERE
 
 Ein Aspekt auf den ich bisher nicht eingegangen bin, ist die Visualisierung der Daten, denn auch darin unterstützt Sie der WDQS. Beispielsweise gibt es in Wikidata eine Eigenschaft (`P180`), welche zur Beschreibung des Inhalts der Bilder verwendet werden kann. Schauen wir uns ein Beispiel an. 
 
-* „Gebe mir alle Gemälde, die einen Engel als Motiv haben.” (Ein anderes Beispiel wäre der "Horizont": wd:Q43261)
+* „Gib mir alle Gemälde, die einen Engel als Motiv haben.” (Ein anderes Beispiel wäre der "Horizont": `wd:Q43261`)
 
 ```sparql
 SELECT ?item ?itemLabel
@@ -257,7 +262,7 @@ Aber lassen Sie nun schauen, wie die Abfrage erweitert wurde:
 Ausdruck | Beschreibung
 -------- | -------- 
 ?image   | Eine Variable
-OPTIONAL | Es handelt sich um ein neues Ausdrucksmittel. Es bedeutet, dass diese Aussage auf den entsprechenden Objekten nicht vorkommen muss, aber wenn es vorkommt, wird die Ergebnismenge um diese Information erweitert. OPTIONAL bezieht sich auf die rechts stehende Aussage ist aber linksassoziativ. 
+OPTIONAL | Es handelt sich um ein neues Ausdrucksmittel. Es bedeutet, dass diese Aussage auf den entsprechenden Objekten nicht vorkommen muss, aber wenn es vorkommt, wird die Ergebnismenge um diese Information erweitert. `OPTIONAL` bezieht sich auf die rechts stehende Aussage, ist aber linksassoziativ.
 
 Wählen Sie nun im Drop-Down Menü die Visualisierung *ImageGrid* aus.
 
@@ -308,7 +313,7 @@ Zeige wie diese Visualsierungen, auch innerhalb anderer Anwendugnen verwendet we
 **>>> FOLIE: "Anwendung Teil 2" (Foliennummer: ) <<<**
 
 * Aufgabe 5: „Geben Sie mir eine Karte, in der alle Ort eingezeichnet sind, an denen sich aktuell Gemälde von Leonardo Da Vinci befinden.”
-* Aufgabe 6 (fortgeschritten): „Gebe mir eine Karte auf der alle Museen und Unterklassen von Museen in Italien eingezeichnet sind, in denen sich Bilder befinden, dessen Urheber*innen zur Bewegung der Hochrenaissance gezählt werden. Sofern ein Bild und eine Website zu den Museen angegeben ist, sollen diese Informationen ebenfalls angezeigt werden ”
+* Aufgabe 6 (fortgeschritten): „Gib mir eine Karte auf der alle Museen und Unterklassen von Museen in Italien eingezeichnet sind, in denen sich Bilder befinden, dessen Urheber*innen zur Bewegung der Hochrenaissance gezählt werden. Sofern ein Bild und eine Website zu den Museen angegeben ist, sollen diese Informationen ebenfalls angezeigt werden ”
 
 
 
