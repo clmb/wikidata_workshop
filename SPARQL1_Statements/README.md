@@ -171,7 +171,7 @@ WHERE
   ?item wdt:P31 wd:Q3305213.
   ?item wdt:P195 wd:Q3044768.
   
-  SERVICE wikibase:label { bd:serviceParam wikibase:language “[AUTO_LANGUAGE],en”. }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
 ```
 
