@@ -117,7 +117,7 @@ SELECT ?item ?itemLabel
 WHERE
 {
    ?item wdt:P31 wd:Q7328910 .
-   ?itemwdt:P361 wd:Q19675 .
+   ?item wdt:P361 wd:Q19675 .
   
    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
