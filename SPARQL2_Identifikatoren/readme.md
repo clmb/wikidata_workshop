@@ -1,8 +1,8 @@
 
-# Einführung in Identifikatoren 
+# Einführung in Identifikatoren
 
 Fokus:
-  * Informationen, die von Wikidata verlinkt sind 
+  * Informationen, die von Wikidata verlinkt sind
 
 Zielsetzung:
   * Verstehen von Identifier und die Rolle von Wikidata als Authority Hub
@@ -21,7 +21,7 @@ Lassen Sie uns dazu wieder zu unserem Beispiel zurückkehren:
 
 ```sparql
 SELECT (COUNT(?propertyclaim) AS ?count)
-WHERE 
+WHERE
 {
   wd:Q762 ?propertyclaim ?value  .
   ?property wikibase:directClaim ?propertyclaim .
@@ -32,9 +32,9 @@ Das sind einige. Nun ist es aber für Sie wahrscheinlich wichtiger zu wissen, in
 
   * Gibt mir die Anzahl aller Items, die diesen Identifikator benutzen (wdt:P245 ULAN-ID):
 
-```sparql 
-SELECT (COUNT(?item) AS ?count) 
-WHERE 
+```sparql
+SELECT (COUNT(?item) AS ?count)
+WHERE
 {
   ?item wdt:P245 ?id .
 }
@@ -48,14 +48,14 @@ Starten wir wieder mit dem bekannten Fall:
 
   * Gebe mir eine Liste von 100 Maler*innen mit ihrer deutschen Bezeichnung und ihrer ULAN-ID, falls vorhanden.
 
-```sparql 
-SELECT ?item ?itemLabel ?ulan 
-WHERE 
+```sparql
+SELECT ?item ?itemLabel ?ulan
+WHERE
 {
   ?item wdt:P106 wd:Q1028181 .
-  
+
   OPTIONAL { ?item wdt:P245 ?ulan. }
- 
+
   SERVICE wikibase:label {
  	bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" .
    }  
@@ -66,16 +66,16 @@ Nun wollen wir aber auch den Link auf die ULAN-Referenz erhalten:
 
   * Gebe mir eine Liste von 100 Maler*innen mit ihrer deutschen Bezeichnung und ihrer ULAN-ID und dem externen Link.
 
-```sparql 
+```sparql
 SELECT ?item ?itemLabel ?ulan  ?url
-WHERE 
+WHERE
 {
   ?item wdt:P106 wd:Q1028181 .
   ?item wdt:P245 ?ulan .
 
   wd:P245 wdt:P1630 ?formatter .  
   BIND(IRI(REPLACE(?formatter, '\\$1', ?ulan)) AS ?url) .
- 
+
   SERVICE wikibase:label {
  	bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" .
    }  
@@ -86,16 +86,16 @@ WHERE
 
   * Gebe mir eine Liste von 100 Maler*innen mit ihrer deutschen Bezeichnung und ihrer ULAN-ID und RDF.
 
-```sparql 
+```sparql
 SELECT ?item ?itemLabel ?ulan  ?url ?rdfResource
-WHERE 
+WHERE
 {
   ?item wdt:P106 wd:Q1028181 .
   ?item wdt:P245 ?ulan .
-  
+
   wd:P245 wdt:P1630 ?formatter .  
   BIND(IRI(REPLACE(?formatter, '\\$1', ?ulan)) AS ?url) .
-  
+
   wd:P245 wdt:P1921 ?rdfFormatter
   BIND(IRI(REPLACE(?rdfFormatter,'\\$1', ?ulan)) AS ?rdfResource) .
 
@@ -105,25 +105,29 @@ WHERE
 } LIMIT 100
 ```
 
-Zum Ende möchte ich auf eine zentrale Idee von [Linked Open Data](https://de.wikipedia.org/wiki/Linked_Open_Data) eingehen. Auch der WDQS erlaubt es, sogenannte "federated queries" abzusetzen. Ich gebe Ihnen hier nur ein sehr einfaches Beispiel, aber ich denke, Sie erkennen die Möglichkeiten die darin liegen: 
+Zum Ende möchte ich auf eine zentrale Idee von [Linked Open Data](https://de.wikipedia.org/wiki/Linked_Open_Data) eingehen. Auch der WDQS erlaubt es, sogenannte "federated queries" abzusetzen. Ich gebe Ihnen hier nur ein sehr einfaches Beispiel, aber ich denke, Sie erkennen die Möglichkeiten die darin liegen:
 
-  * Gib mir das Label und die Notizen zu Leonardo Da Vinci vom britischen Museum.
+  * Gib mir das Label und die Fläche von Greenwich sowohl aus Wikidata als auch aus dem britischen "Office for National Statistics - Geography Linked Data"-Datensatz.
 
 ```sparql
-PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
-PREFIX rs: <http://www.researchspace.org/ontology/>
-SELECT ?label ?note
-WHERE 
+SELECT ?labelWikidata ?labelGov ?areaWikidata ?areaGov
+WHERE
 {
-  wd:Q762 wdt:P1711 ?id .
-            
-  BIND(URI(CONCAT("http://collection.britishmuseum.org/id/person-institution/", ?id)) AS ?bmID) .
-             
-  SERVICE <http://collection.britishmuseum.org/sparql> {
-    ?bmID rs:displayLabel ?label;
-          crm:P3_has_note ?note .      
+  wd:Q179385 wdt:P2046 ?areaWikidata ;
+             wdt:P836 ?gssCode ;
+             rdfs:label ?labelWikidata.
+
+  FILTER(LANG(?labelWikidata) = "en")
+
+  wd:P836 wdt:P1921 ?formatterUrl .
+
+  BIND(IRI(REPLACE(?gssCode, '^(.+)$', ?formatterUrl)) AS ?gssCodeFormatted) .
+
+  SERVICE <http://statistics.data.gov.uk/sparql> {
+    ?gssCodeFormatted <http://statistics.data.gov.uk/def/measurement#hasExtentOfTheRealmHectarage> ?areaGov;
+                      <http://statistics.data.gov.uk/def/statistical-geography#officialname> ?labelGov.
   }
 }
 ```
 
-Das war es. Ich habe Ihnen nun einen ersten Einblick in die Möglichkeiten von Wikidata und der Abfrage der Daten gegeben. Aber ist wirklich nur ein erster Einstieg und es gibt noch viel mehr Möglichkeiten. 
+Das war es. Ich habe Ihnen nun einen ersten Einblick in die Möglichkeiten von Wikidata und der Abfrage der Daten gegeben. Aber ist wirklich nur ein erster Einstieg und es gibt noch viel mehr Möglichkeiten.
