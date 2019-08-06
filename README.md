@@ -4,3 +4,6 @@ Dieses Tutorial wurde für den DHd 2018 Workshops ["Wikidata: Nutzungsmöglichke
 Mein großer Dank gilt [Marisa Nest](https://github.com/marisanest) und [Jakob Hoeper](https://github.com/JKatzwinkel), die dieses Skript mehrfach getestet und die bestehenden SPARQL-Abfragen mit ihren Ideen erweitert haben.
 
 Eine [weiterführende Einblick (in englisch) in die Möglichkeiten des WDQS](http://paws-public.wmflabs.org/paws-public/User:Criscod/Wikidata_Zurich/Semantic%20Web%20Engineering%20(UZH)%20-%20Wikidata.ipynb) wurde von meiner Kollegin [Cristina Sarasua](https://www.ifi.uzh.ch/en/ddis/people/sarasua.html) erstellt. Es lohnt sich, diese Tutorial durchzuführen, nachdem die grundlegenden Konzepte bekannt sind. 
+
+Weitere passende Tutorial aus dem Bereich Digital Humanities:
+* Lecture on [Wikidata and Mix'n'Match](https://drive.google.com/file/d/1E4OFIAqV8Cx4Uep19iRHfHXIr-f09j8G/view) at the Digital Humanities at Oxford Summer School, Oxford University, June 2019
