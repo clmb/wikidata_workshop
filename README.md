@@ -8,4 +8,5 @@ Eine [weiterführende Einblick (in englisch) in die Möglichkeiten des WDQS](htt
 Weitere Einführungen in Wikidata für den Bereich Digital Humanities:
 * Lecture on [Wikidata and Mix'n'Match](https://drive.google.com/file/d/1E4OFIAqV8Cx4Uep19iRHfHXIr-f09j8G/view) at the Digital Humanities at Oxford Summer School, Oxford University, June 2019
 * Very useful introduction into the basics of [OpenRefine](https://media.ed.ac.uk/media/OpenRefine+Beginners+Tutorial/0_y5bxsswq)
+* Another [Open Refine introduction]{https://www.youtube.com/watch?v=wfS1qTKFQoI}
 * ... (tbd.)
